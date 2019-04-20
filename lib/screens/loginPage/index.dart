@@ -58,21 +58,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildAcceptSwitch() {
-    return SwitchListTile(
-      value: _formData['acceptTerms'],
-      onChanged: (bool value) {
-        setState(() {
-          _formData['acceptTerms'] = value;
-        });
-      },
-      title: Text(
-        'Accept Terms',
-        style: TextStyle(color: Colors.white),
-      ),
-    );
-  }
-
   void _submitForm() {
     if (!_formKey.currentState.validate()) {
       return;
@@ -81,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.pushReplacementNamed(context, '/locationPage');
   }
 
-  _buildLoginButton() {
+  Widget _buildLoginButton() {
     return Container(
       decoration: new BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -131,6 +116,7 @@ class _LoginPageState extends State<LoginPage> {
     final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.Colors.loginGradientEnd,
         title: Text('Login'),
       ),
       body: Container(
@@ -165,11 +151,12 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: Text(
                           'Not signed up yet? Click here...',
-                          style: TextStyle(color: Colors.white70),
+                          style: TextStyle(color: Theme.Colors.loginGradientStart),
                         ),
                       ),
                     ),
                     //imports the terms and services dialog
+                    SizedBox(height: 80.0),
                     Terms(),
                     
                   ],

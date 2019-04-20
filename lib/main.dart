@@ -4,6 +4,7 @@ import 'package:awsome_app/screens/signUpPage/index.dart';
 import 'package:awsome_app/screens/splashScreen/index.dart';
 import 'package:awsome_app/screens/locationPage/index.dart';
 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -20,7 +21,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         theme: ThemeData(
             brightness: Brightness.light,
-            primarySwatch: Colors.orange,
+            primarySwatch: Colors.blue,
             accentColor: Colors.pink[700],
             //buttonColor: Colors.pink[700]
             ),
