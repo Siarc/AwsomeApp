@@ -72,20 +72,20 @@ class _LoginPageState extends State<LoginPage> {
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: Theme.Colors.loginGradientStart,
+            color: Theme.Colors.gradientStart,
             offset: Offset(1.0, 8.0),
             blurRadius: 10.0,
           ),
           BoxShadow(
-            color: Theme.Colors.loginGradientEnd,
+            color: Theme.Colors.gradientEnd,
             offset: Offset(1.0, 6.0),
             blurRadius: 20.0,
           ),
         ],
         gradient: new LinearGradient(
             colors: [
-              Theme.Colors.loginGradientEnd,
-              Theme.Colors.loginGradientStart
+              Theme.Colors.gradientEnd,
+              Theme.Colors.gradientStart
             ],
             begin: const FractionalOffset(0.2, 0.2),
             end: const FractionalOffset(1.0, 1.0),
@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: MaterialButton(
         highlightColor: Colors.transparent,
-        splashColor: Theme.Colors.loginGradientEnd,
+        splashColor: Theme.Colors.gradientEnd,
         //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
     final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.Colors.loginGradientEnd,
+        backgroundColor: Theme.Colors.gradientEnd,
         title: Text('Login'),
       ),
       body: Container(
@@ -151,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: Text(
                           'Not signed up yet? Click here...',
-                          style: TextStyle(color: Theme.Colors.loginGradientStart),
+                          style: TextStyle(color: Theme.Colors.gradientStart),
                         ),
                       ),
                     ),
