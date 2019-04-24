@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         theme: ThemeData(
             brightness: Brightness.light,
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.red,
             accentColor: Colors.pink[700],
             //buttonColor: Colors.pink[700]
             ),

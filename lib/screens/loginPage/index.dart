@@ -59,10 +59,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _submitForm() {
-    if (!_formKey.currentState.validate()) {
-      return;
-    }
-    _formKey.currentState.save();
+    // if (!_formKey.currentState.validate()) {
+    //   return;
+    // }
+    // _formKey.currentState.save();
     Navigator.pushReplacementNamed(context, '/locationPage');
   }
 
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
     final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.Colors.gradientEnd,
+        backgroundColor: Colors.red,
         title: Text('Login'),
       ),
       body: Container(

@@ -7,7 +7,7 @@ class SideDrawer extends StatelessWidget {
   final String _accountEmail = 'aminul.irony@gmail.com';
   final String _accountImage =
       'https://i.kym-cdn.com/photos/images/newsfeed/001/268/262/683.jpg';
-
+  final String _placeHolderImage = 'assets/wlopPlaceHolderImage.jpg';
   Widget _buildUserAccountDrawerHeader(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -23,12 +23,18 @@ class SideDrawer extends StatelessWidget {
       child: UserAccountsDrawerHeader(
         accountName: Text(_accountName),
         accountEmail: Text(_accountEmail),
-        currentAccountPicture: CircleAvatar(
+        currentAccountPicture: _placeHolderImage == null ? CircleAvatar(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: Theme.Colors.yellowPinkGradient,
+            ),
+          ),
+        ) : CircleAvatar(
           backgroundImage: NetworkImage(_accountImage),
         ),
         decoration: BoxDecoration(
             image: DecorationImage(
-          image: AssetImage('assets/wlopDrawerHeaderBackground.jpg'),
+          image: AssetImage(_placeHolderImage),
           fit: BoxFit.fill,
         )),
       ),

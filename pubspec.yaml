@@ -47,6 +47,16 @@ flutter:
   - assets/sekiro.jpg
   - assets/wlopAccountPicture.jpg
   - assets/wlopDrawerHeaderBackground.jpg
+  - assets/wlopPlaceHolderImage.jpg
+  - assets/wallpaperHD.jpg
+  - assets/divisionMaps/barisalDivisionMap.png
+  - assets/divisionMaps/chittagongDivisionMap.png
+  - assets/divisionMaps/dhakaDivisionMap.png
+  - assets/divisionMaps/khulnaDivisionMap.png
+  - assets/divisionMaps/mymensinghDivisionMap.png
+  - assets/divisionMaps/rajshahiDivisionMap.png
+  - assets/divisionMaps/rangpurDivisionMap.png
+  - assets/divisionMaps/sylhetDivisionMap.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

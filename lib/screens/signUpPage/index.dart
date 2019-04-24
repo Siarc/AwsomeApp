@@ -138,7 +138,7 @@ class _SignUpPageState extends State<SignUpPage> {
     final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.Colors.gradientEnd,
+        backgroundColor: Colors.red,
         title: Text('Sign Up'),
       ),
       body: Container(
