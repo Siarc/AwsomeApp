@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:awsome_app/screens/signUpPage/index.dart';
+import 'package:awsome_app/screens/registerPage/index.dart';
 import 'package:awsome_app/widgets/uiElements/Terms.dart';
 import 'package:awsome_app/style/theme.dart' as Theme;
 
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
     //   return;
     // }
     // _formKey.currentState.save();
-    Navigator.pushReplacementNamed(context, '/locationPage');
+    Navigator.pushReplacementNamed(context, '/divisionPage');
   }
 
   Widget _buildLoginButton() {
@@ -83,10 +83,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ],
         gradient: new LinearGradient(
-            colors: [
-              Theme.Colors.gradientEnd,
-              Theme.Colors.gradientStart
-            ],
+            colors: [Theme.Colors.gradientEnd, Theme.Colors.gradientStart],
             begin: const FractionalOffset(0.2, 0.2),
             end: const FractionalOffset(1.0, 1.0),
             stops: [0.0, 1.0],
@@ -146,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignUpPage()),
+                                builder: (context) => RegisterPage()),
                           );
                         },
                         child: Text(
@@ -158,7 +155,6 @@ class _LoginPageState extends State<LoginPage> {
                     //imports the terms and services dialog
                     SizedBox(height: 80.0),
                     Terms(),
-                    
                   ],
                 ),
               ),

@@ -1,4 +1,4 @@
-import 'package:awsome_app/models/division.dart';
+import 'package:awsome_app/models/division/division.dart';
 
 class DivisionDao {
   static final List<Division> divisions = [

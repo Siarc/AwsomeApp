@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:awsome_app/screens/loginPage/index.dart';
-import 'package:awsome_app/screens/signUpPage/index.dart';
+import 'package:awsome_app/screens/registerPage/index.dart';
+import "package:awsome_app/screens/districtPage/index.dart";
 import 'package:awsome_app/screens/splashScreen/index.dart';
-import 'package:awsome_app/screens/locationPage/index.dart';
+import 'package:awsome_app/screens/divisionPage/index.dart';
 
 
 void main() => runApp(MyApp());
@@ -28,15 +29,14 @@ class _MyAppState extends State<MyApp> {
         //home: AuthPage(),
         routes: {
           '/': (BuildContext context) => LoginPage(),
-          '/signUpPage':(BuildContext context) => SignUpPage(),
-          '/locationPage':(BuildContext context) => LocationPage(),
+          '/divisionPage':(BuildContext context) => DivisionPage(),
           '/splashScreen':(BuildContext context) => SplashScreen(),
           
         },
         
         onUnknownRoute: (RouteSettings settings) {
           return MaterialPageRoute(
-            builder: (BuildContext context) => LocationPage(),
+            builder: (BuildContext context) => DivisionPage(),
           );
         },
       );

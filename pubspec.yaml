@@ -57,6 +57,30 @@ flutter:
   - assets/divisionMaps/rajshahiDivisionMap.png
   - assets/divisionMaps/rangpurDivisionMap.png
   - assets/divisionMaps/sylhetDivisionMap.png
+  - assets/barisal/barisal0.jpg
+  - assets/barisal/barisal1.jpg
+  - assets/barisal/barisal2.jpg
+  - assets/barisal/barisal3.jpg
+  - assets/barisal/barisal4.jpg
+  - assets/barisal/barisal5.jpg
+  - assets/barisal/barisal6.jpg
+  - assets/barisal/barisal7.jpg
+  - assets/barisal/barisal9.jpg
+  - assets/barisal/barisal10.jpg
+  - assets/comilla/comilla0.jpg
+  - assets/comilla/comilla1.jpg
+  - assets/comilla/comilla2.jpg
+  - assets/comilla/comilla3.jpg
+  - assets/comilla/comilla4.jpg
+  - assets/comilla/comilla5.jpg
+  - assets/comilla/comilla6.jpg
+  - assets/comilla/comilla7.jpg
+  - assets/comilla/comilla8.jpg
+  - assets/comilla/comilla9.jpg
+  - assets/comilla/comilla10.jpg
+  - assets/comilla/comilla11.jpg
+  - assets/comilla/comilla12.jpg
+  - assets/comilla/comilla13.jpg
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

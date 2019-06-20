@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:awsome_app/widgets/uiElements/Terms.dart';
 import 'package:awsome_app/style/theme.dart' as Theme;
 
-class SignUpPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _SignUpPageState();
+    return _RegisterPageState();
   }
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final Map<String, dynamic> _formData = {'email': null, 'password': null};
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordTextController = TextEditingController();
