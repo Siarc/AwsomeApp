@@ -1,3 +1,4 @@
+import 'package:awsome_app/screens/detailsPage/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:awsome_app/style/theme.dart' as Theme;
@@ -5,8 +6,9 @@ import 'package:awsome_app/models/district/district.dart';
 
 class DistrictRow extends StatelessWidget {
   final District district;
+  final String divisionName;
 
-  DistrictRow(this.district);
+  DistrictRow(this.district, this.divisionName);
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +35,12 @@ class DistrictRow extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             //Text(division.description, maxLines: 1),
-            
+
             Container(
                 color: const Color(0xFF00C6FF),
                 width: 24.0,
                 height: 1.0,
                 margin: const EdgeInsets.symmetric(vertical: 8.0)),
-
           ],
         ),
       ),
@@ -60,17 +61,9 @@ class DistrictRow extends StatelessWidget {
   }
 
   _navigateTo(context) {
-    final snackBar = SnackBar(
-      content: Text('Needs to navigate somewhere'),
-      action: SnackBarAction(
-        label: 'Undo',
-        onPressed: () {
-          // Some code to undo the change!
-        },
-      ),
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DetialsPage(district, divisionName)),
     );
-
-    // Find the Scaffold in the Widget tree and use it to show a SnackBar!
-    Scaffold.of(context).showSnackBar(snackBar);
   }
 }

@@ -1,5 +1,5 @@
 class District {
-  final String id;
+  final int id;
   final String districtName;
   final String description;
   final List<String> image;

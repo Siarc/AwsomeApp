@@ -89,13 +89,13 @@ class SideDrawer extends StatelessWidget {
           ),
           _buildDevider(),
           ListTile(
-            title: Text('Travel Stories'),
+            title: Text('Travel Guides'),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: Text('Create Story'),
+            title: Text('Create Guide'),
             onTap: () {
               Navigator.pop(context);
             },

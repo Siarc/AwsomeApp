@@ -6,9 +6,9 @@ import 'package:awsome_app/widgets/uiElements/drawer.dart';
 import 'package:awsome_app/widgets/uiElements/districtRow.dart';
 
 class DistrictPage extends StatelessWidget {
-  final String name;
+  final String divisionName;
 
-  DistrictPage(this.name);
+  DistrictPage(this.divisionName);
 
   _buildSilverAppBar() {
     return SliverAppBar(
@@ -46,15 +46,15 @@ class DistrictPage extends StatelessWidget {
     );
   }
 
-  _buildDivisionList(BuildContext context, String name) {
-    switch (name) {
+  _buildDivisionList(BuildContext context, String divisionName) {
+    switch (divisionName) {
       case 'Borishal':
         return Flexible(
           child: Container(
             child: ListView.builder(
               itemCount: BorisalDao.districts.length,
               itemBuilder: (_, index) =>
-                  DistrictRow(BorisalDao.districts[index]),
+                  DistrictRow(BorisalDao.districts[index], divisionName),
             ),
           ),
         );
@@ -66,7 +66,7 @@ class DistrictPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: ChittagongDao.districts.length,
               itemBuilder: (_, index) =>
-                  DistrictRow(ChittagongDao.districts[index]),
+                  DistrictRow(ChittagongDao.districts[index], divisionName),
             ),
           ),
         );
@@ -77,7 +77,7 @@ class DistrictPage extends StatelessWidget {
           child: Container(
             child: ListView.builder(
               itemCount: DhakaDao.districts.length,
-              itemBuilder: (_, index) => DistrictRow(DhakaDao.districts[index]),
+              itemBuilder: (_, index) => DistrictRow(DhakaDao.districts[index], divisionName),
             ),
           ),
         );
@@ -89,7 +89,7 @@ class DistrictPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: KhulnaDao.districts.length,
               itemBuilder: (_, index) =>
-                  DistrictRow(KhulnaDao.districts[index]),
+                  DistrictRow(KhulnaDao.districts[index], divisionName),
             ),
           ),
         );
@@ -101,7 +101,7 @@ class DistrictPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: MymensinghDao.districts.length,
               itemBuilder: (_, index) =>
-                  DistrictRow(MymensinghDao.districts[index]),
+                  DistrictRow(MymensinghDao.districts[index], divisionName),
             ),
           ),
         );
@@ -113,7 +113,7 @@ class DistrictPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: RajshahiDao.districts.length,
               itemBuilder: (_, index) =>
-                  DistrictRow(RajshahiDao.districts[index]),
+                  DistrictRow(RajshahiDao.districts[index], divisionName),
             ),
           ),
         );
@@ -125,7 +125,7 @@ class DistrictPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: RangpurDao.districts.length,
               itemBuilder: (_, index) =>
-                  DistrictRow(RangpurDao.districts[index]),
+                  DistrictRow(RangpurDao.districts[index], divisionName),
             ),
           ),
         );
@@ -137,7 +137,7 @@ class DistrictPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: SylhetDao.districts.length,
               itemBuilder: (_, index) =>
-                  DistrictRow(SylhetDao.districts[index]),
+                  DistrictRow(SylhetDao.districts[index], divisionName),
             ),
           ),
         );
@@ -181,7 +181,7 @@ class DistrictPage extends StatelessWidget {
             ),
             child: Column(
               children: <Widget>[
-                _buildDivisionList(context, name),
+                _buildDivisionList(context, divisionName),
               ],
             ),
           )),
