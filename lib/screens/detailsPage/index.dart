@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+//import 'package:provider/provider.dart';
 
 import 'package:awsome_app/widgets/uiElements/drawer.dart';
 import 'package:awsome_app/models/district/district.dart';
@@ -11,7 +11,6 @@ class DetialsPage extends StatefulWidget {
 
   const DetialsPage(this.district, this.divisionName, {Key key})
       : super(key: key);
-
   _DetialsPageState createState() => _DetialsPageState();
 }
 

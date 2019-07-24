@@ -1,5 +1,8 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:awsome_app/screens/registerPage/index.dart';
 import 'package:awsome_app/widgets/uiElements/Terms.dart';
 import 'package:awsome_app/style/theme.dart' as Theme;
@@ -12,6 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  int _buttonState = 0;
   final Map<String, dynamic> _formData = {'email': null, 'password': null};
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -59,11 +63,28 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _submitForm() {
-    // if (!_formKey.currentState.validate()) {
-    //   return;
-    // }
-    // _formKey.currentState.save();
-    Navigator.pushReplacementNamed(context, '/divisionPage');
+    if (!_formKey.currentState.validate()) {
+      return;
+    } else {
+      _formKey.currentState.save();
+      setState(() {
+        _buttonState = 1;
+      });
+
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: _formData['email'], password: _formData['password'])
+          .then((user) {
+        print("signed in as ${user.uid}");
+
+        Navigator.pushReplacementNamed(context, '/divisionPage');
+      }).catchError((e) {
+        setState(() {
+          _buttonState = 0;
+        });
+        print(e);
+      });
+    }
   }
 
   Widget _buildLoginButton() {
@@ -90,21 +111,39 @@ class _LoginPageState extends State<LoginPage> {
             tileMode: TileMode.clamp),
       ),
       child: MaterialButton(
-        highlightColor: Colors.transparent,
-        splashColor: Theme.Colors.gradientEnd,
-        //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
-          child: Text(
-            "LOGIN",
-            style: TextStyle(
-              color: Colors.white,
-            ),
+          highlightColor: Colors.transparent,
+          splashColor: Theme.Colors.gradientEnd,
+          //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
+            child: setUpLoginButton(),
           ),
-        ),
-        onPressed: () => _submitForm(),
-      ),
+          onPressed: () {
+            setState(() {
+              if (_buttonState == 0) {
+                _submitForm();
+              }
+            });
+          }),
     );
+  }
+
+  setUpLoginButton() {
+    if (_buttonState == 0) {
+      return Text(
+        "LOGIN",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      );
+    } else if (_buttonState == 1) {
+      return CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+      );
+    } else {
+      _buttonState = 0;
+    }
   }
 
   @override

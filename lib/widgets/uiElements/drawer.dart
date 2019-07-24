@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:awsome_app/style/theme.dart' as Theme;
+import 'package:awsome_app/tryouts/tryNotePage.dart';
 
 class SideDrawer extends StatelessWidget {
   final String _accountName = 'Aminul Islam';
@@ -23,15 +24,17 @@ class SideDrawer extends StatelessWidget {
       child: UserAccountsDrawerHeader(
         accountName: Text(_accountName),
         accountEmail: Text(_accountEmail),
-        currentAccountPicture: _placeHolderImage == null ? CircleAvatar(
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: Theme.Colors.yellowPinkGradient,
-            ),
-          ),
-        ) : CircleAvatar(
-          backgroundImage: NetworkImage(_accountImage),
-        ),
+        currentAccountPicture: _placeHolderImage == null
+            ? CircleAvatar(
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: Theme.Colors.yellowPinkGradient,
+                  ),
+                ),
+              )
+            : CircleAvatar(
+                backgroundImage: NetworkImage(_accountImage),
+              ),
         decoration: BoxDecoration(
             image: DecorationImage(
           image: AssetImage(_placeHolderImage),
@@ -97,7 +100,10 @@ class SideDrawer extends StatelessWidget {
           ListTile(
             title: Text('Create Guide'),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NoteEditPage()),
+              );
             },
           ),
           _buildDevider(),
