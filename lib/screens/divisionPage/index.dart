@@ -5,7 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:awsome_app/widgets/uiElements/drawer.dart';
 import 'package:awsome_app/widgets/uiElements/divisionRow.dart';
 
-class DivisionPage extends StatelessWidget {
+class DivisionPage extends StatefulWidget {
+  DivisionPage({Key key}) : super(key: key);
+
+  _DivisionPageState createState() => _DivisionPageState();
+}
+
+class _DivisionPageState extends State<DivisionPage> {
   _buildSilverAppBar() {
     return SliverAppBar(
       expandedHeight: 200.0,
@@ -53,28 +59,50 @@ class DivisionPage extends StatelessWidget {
     );
   }
 
+  Future<bool> _onBackPressed() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Leave the app?"),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("No"),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+                FlatButton(
+                  child: Text("Yes"),
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //import side drawer
-      drawer: SideDrawer(),
-      body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              _buildSilverAppBar(),
-            ];
-          },
-          body: Container(
-            decoration: BoxDecoration(
-              image: _buildBackgroundImage(),
-              //color: Theme.Colors.divisionCard
-            ),
-            child: Column(
-              children: <Widget>[
-                _buildDivisionList(),
-              ],
-            ),
-          )),
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        //import side drawer
+        drawer: SideDrawer(),
+        body: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                _buildSilverAppBar(),
+              ];
+            },
+            body: Container(
+              decoration: BoxDecoration(
+                image: _buildBackgroundImage(),
+                //color: Theme.Colors.divisionCard
+              ),
+              child: Column(
+                children: <Widget>[
+                  _buildDivisionList(),
+                ],
+              ),
+            )),
+      ),
     );
   }
 }

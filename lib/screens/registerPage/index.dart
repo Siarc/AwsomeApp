@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'package:awsome_app/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 import 'package:awsome_app/widgets/uiElements/Terms.dart';
 import 'package:awsome_app/style/theme.dart' as Theme;
@@ -11,7 +15,14 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final Map<String, dynamic> _formData = {'email': null, 'password': null};
+  int _buttonState = 0;
+  String errorMsg;
+  final Map<String, dynamic> _formData = {
+    'firstName': null,
+    'lastName': null,
+    'email': null,
+    'password': null
+  };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordTextController = TextEditingController();
 
@@ -80,12 +91,49 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   //On button press performs the validatation and moves to locationPage
-  void _submitForm() {
+  Future _submitForm() async {
     if (!_formKey.currentState.validate()) {
-      return;
+      return _buildErrorDialog(context, "Validation Error");
+    } else {
+      _formKey.currentState.save();
+      setState(() {
+        _buttonState = 1;
+      });
+      try {
+        await Provider.of<AuthService>(context).createUser(
+            firstName: _formData['firstName'],
+            lastName: _formData['lastName'],
+            email: _formData['email'],
+            password: _formData['password']);
+        Navigator.pushReplacementNamed(context, '/loginPage');
+      } on AuthException catch (error) {
+        return _buildErrorDialog(context, error.message);
+      } on Exception catch (error) {
+        return _buildErrorDialog(context, error.toString());
+      }
     }
-    _formKey.currentState.save();
-    Navigator.pushReplacementNamed(context, '/locationPage');
+  }
+
+  Future _buildErrorDialog(BuildContext context, _message) {
+    return showDialog(
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error Message'),
+          content: Text(_message),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  setState(() {
+                    _buttonState = 0;
+                  });
+                  Navigator.of(context).pop();
+                })
+          ],
+        );
+      },
+      context: context,
+    );
   }
 
   Widget _buildSignUpButton() {
@@ -105,30 +153,77 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ],
         gradient: new LinearGradient(
-            colors: [
-              Theme.Colors.gradientEnd,
-              Theme.Colors.gradientStart
-            ],
+            colors: [Theme.Colors.gradientEnd, Theme.Colors.gradientStart],
             begin: const FractionalOffset(0.2, 0.2),
             end: const FractionalOffset(1.0, 1.0),
             stops: [0.0, 1.0],
             tileMode: TileMode.clamp),
       ),
       child: MaterialButton(
-        highlightColor: Colors.transparent,
-        splashColor: Theme.Colors.gradientEnd,
-        //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
-          child: Text(
-            "SIGN UP",
-            style: TextStyle(
-              color: Colors.white,
-            ),
+          highlightColor: Colors.transparent,
+          splashColor: Theme.Colors.gradientEnd,
+          //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
+            child: setUpSigninButton(),
           ),
+          onPressed: () {
+            setState(() {
+              if (_buttonState == 0) {
+                _submitForm();
+              }
+            });
+          }),
+    );
+  }
+
+  setUpSigninButton() {
+    if (_buttonState == 0) {
+      return Text(
+        "REGISTER",
+        style: TextStyle(
+          color: Colors.white,
         ),
-        onPressed: () => _submitForm(),
-      ),
+      );
+    } else if (_buttonState == 1) {
+      return CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+      );
+    } else {
+      _buttonState = 0;
+    }
+  }
+
+  Widget _buildFirstNameTextField() {
+    return TextFormField(
+      decoration: InputDecoration(
+          labelText: 'First Name', filled: true, fillColor: Colors.white),
+      keyboardType: TextInputType.emailAddress,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Please enter First Name';
+        }
+      },
+      onSaved: (String value) {
+        _formData['firstName'] = value;
+      },
+    );
+  }
+
+  Widget _buildLastNameTextField() {
+    return TextFormField(
+      decoration: InputDecoration(
+          labelText: 'Last Name', filled: true, fillColor: Colors.white),
+      keyboardType: TextInputType.emailAddress,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Please Enter Last Name';
+        }
+      },
+      onSaved: (String value) {
+        _formData['lastName'] = value;
+      },
     );
   }
 
@@ -139,7 +234,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text('Sign Up'),
+        title: Text('Register'),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -154,6 +249,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
+                    _buildFirstNameTextField(),
+                    SizedBox(height: 10.0),
+                    _buildLastNameTextField(),
+                    SizedBox(height: 10.0),
                     _buildEmailTextField(),
                     SizedBox(height: 10.0),
                     _buildPasswordTextField(),
@@ -166,12 +265,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     Container(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.popUntil(context, ModalRoute.withName('/'));
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/loginPage',
+                            ModalRoute.withName('/loginPage'),
+                          );
                         },
                         child: Text(
                           'Already signup up? Click here...',
-                          style:
-                              TextStyle(color: Theme.Colors.gradientStart),
+                          style: TextStyle(color: Theme.Colors.gradientStart),
                         ),
                       ),
                     ),

@@ -1,45 +1,97 @@
+import 'package:awsome_app/services/auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'package:awsome_app/style/theme.dart' as Theme;
-import 'package:awsome_app/tryouts/tryNotePage.dart';
+import 'package:awsome_app/screens/personalGuidesPage/index.dart';
 
-class SideDrawer extends StatelessWidget {
-  final String _accountName = 'Aminul Islam';
-  final String _accountEmail = 'aminul.irony@gmail.com';
+import 'package:awsome_app/models/profile/pModel.dart';
+
+class SideDrawer extends StatefulWidget {
+  SideDrawer({Key key}) : super(key: key);
+
+  _SideDrawerState createState() => _SideDrawerState();
+}
+
+class _SideDrawerState extends State<SideDrawer> {
+  String _accountName = 'anonymous';
+  String _accountEmail = 'You are not logged in';
   final String _accountImage =
       'https://i.kym-cdn.com/photos/images/newsfeed/001/268/262/683.jpg';
   final String _placeHolderImage = 'assets/wlopPlaceHolderImage.jpg';
+
+  Future<void> getNameAndEmail() async {
+    String accountName = await Provider.of<AuthService>(context).getUserName();
+    String accountEmail =
+        await Provider.of<AuthService>(context).getUserEmail();
+    setState(() {
+      _accountName = accountName;
+      _accountEmail = accountEmail;
+    });
+  }
+
   Widget _buildUserAccountDrawerHeader(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        final snackBar = SnackBar(
-          content: Text('TODO Change Account Settings!'),
-          action: SnackBarAction(
-            label: 'Undo',
-            onPressed: () {},
-          ),
-        );
-        Scaffold.of(context).showSnackBar(snackBar);
-      },
-      child: UserAccountsDrawerHeader(
-        accountName: Text(_accountName),
-        accountEmail: Text(_accountEmail),
-        currentAccountPicture: _placeHolderImage == null
-            ? CircleAvatar(
+    getNameAndEmail();
+    return UserAccountsDrawerHeader(
+      accountName: Provider.of<AuthService>(context).getUser() != null
+          ? Text(_accountName)
+          : Text(_accountName),
+      accountEmail: Text(_accountEmail),
+      currentAccountPicture: _placeHolderImage == null
+          ? GestureDetector(
+              onTap: () {
+                final snackBar = SnackBar(
+                  content: Text('TODO Change Account Settings!'),
+                  action: SnackBarAction(
+                    label: 'Undo',
+                    onPressed: () {},
+                  ),
+                );
+                Scaffold.of(context).showSnackBar(snackBar);
+              },
+              child: CircleAvatar(
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: Theme.Colors.yellowPinkGradient,
                   ),
                 ),
-              )
-            : CircleAvatar(
+              ),
+            )
+          : GestureDetector(
+              onTap: () {
+                final snackBar = SnackBar(
+                  content: Text('TODO Change Account Settings Page'),
+                  action: SnackBarAction(
+                    label: 'Undo',
+                    onPressed: () {},
+                  ),
+                );
+                Scaffold.of(context).showSnackBar(snackBar);
+              },
+              child: CircleAvatar(
                 backgroundImage: NetworkImage(_accountImage),
               ),
-        decoration: BoxDecoration(
-            image: DecorationImage(
+            ),
+      otherAccountsPictures: <Widget>[
+        GestureDetector(
+            onTap: () async {
+              await Provider.of<AuthService>(context).logout();
+
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/loginPage',
+                ModalRoute.withName('/loginPage'),
+              );
+            },
+            child: Icon(
+              Icons.exit_to_app,
+              size: 30.0,
+            ))
+      ],
+      decoration: BoxDecoration(
+        image: DecorationImage(
           image: AssetImage(_placeHolderImage),
           fit: BoxFit.fill,
-        )),
+        ),
       ),
     );
   }
@@ -102,7 +154,7 @@ class SideDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NoteEditPage()),
+                MaterialPageRoute(builder: (context) => PersonalGuidesPage()),
               );
             },
           ),

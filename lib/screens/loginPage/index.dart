@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:awsome_app/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+
 import 'package:awsome_app/screens/registerPage/index.dart';
 import 'package:awsome_app/widgets/uiElements/Terms.dart';
 import 'package:awsome_app/style/theme.dart' as Theme;
@@ -34,9 +36,9 @@ class _LoginPageState extends State<LoginPage> {
           labelText: 'E-Mail', filled: true, fillColor: Colors.white),
       keyboardType: TextInputType.emailAddress,
       validator: (String value) {
-        if (value.isEmpty ||
-            !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                .hasMatch(value)) {
+        Pattern pattern =
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+        if (value.isEmpty || !RegExp(pattern).hasMatch(value)) {
           return 'Please enter a valid email';
         }
       },
@@ -62,29 +64,48 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _submitForm() {
+  Future _submitForm() async {
     if (!_formKey.currentState.validate()) {
-      return;
+      return _buildErrorDialog(context, "Validation Error");
     } else {
       _formKey.currentState.save();
       setState(() {
         _buttonState = 1;
       });
 
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: _formData['email'], password: _formData['password'])
-          .then((user) {
-        print("signed in as ${user.uid}");
-
+      try {
+        FirebaseUser result = await Provider.of<AuthService>(context).loginUser(
+            email: _formData['email'], password: _formData['password']);
+        print(result);
         Navigator.pushReplacementNamed(context, '/divisionPage');
-      }).catchError((e) {
-        setState(() {
-          _buttonState = 0;
-        });
-        print(e);
-      });
+      } on AuthException catch (error) {
+        return _buildErrorDialog(context, error.message);
+      } on Exception catch (error) {
+        return _buildErrorDialog(context, error.toString());
+      }
     }
+  }
+
+  Future _buildErrorDialog(BuildContext context, _message) {
+    return showDialog(
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error Message'),
+          content: Text(_message),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  setState(() {
+                    _buttonState = 0;
+                  });
+                  Navigator.of(context).pop();
+                })
+          ],
+        );
+      },
+      context: context,
+    );
   }
 
   Widget _buildLoginButton() {
@@ -146,55 +167,76 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Future<bool> _onBackPressed() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Leave the app?"),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("No"),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+                FlatButton(
+                  child: Text("Yes"),
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text('Login'),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: _buildBackgroundImage(),
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.red,
+          title: Text('Login'),
         ),
-        padding: EdgeInsets.all(10.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              width: targetWidth,
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    _buildEmailTextField(),
-                    SizedBox(height: 10.0),
-                    _buildPasswordTextField(),
-                    SizedBox(height: 25.0),
-                    //Button code is way too big
-                    //Seperated for clean build method
-                    _buildLoginButton(),
-                    SizedBox(height: 25.0),
-                    Container(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RegisterPage()),
-                          );
-                        },
-                        child: Text(
-                          'Not signed up yet? Click here...',
-                          style: TextStyle(color: Theme.Colors.gradientStart),
+        body: Container(
+          decoration: BoxDecoration(
+            image: _buildBackgroundImage(),
+          ),
+          padding: EdgeInsets.all(10.0),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Container(
+                width: targetWidth,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      _buildEmailTextField(),
+                      SizedBox(height: 10.0),
+                      _buildPasswordTextField(),
+                      SizedBox(height: 25.0),
+                      //Button code is way too big
+                      //Seperated for clean build method
+                      _buildLoginButton(),
+                      SizedBox(height: 25.0),
+                      Container(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterPage()),
+                            );
+                          },
+                          child: Text(
+                            'Not signed up yet? Click here...',
+                            style: TextStyle(color: Theme.Colors.gradientStart),
+                          ),
                         ),
                       ),
-                    ),
-                    //imports the terms and services dialog
-                    SizedBox(height: 80.0),
-                    Terms(),
-                  ],
+                      //imports the terms and services dialog
+                      SizedBox(height: 80.0),
+                      Terms(),
+                    ],
+                  ),
                 ),
               ),
             ),
