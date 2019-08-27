@@ -78,6 +78,7 @@ class _DetialsPageState extends State<DetialsPage> {
       //import side drawer
       drawer: SideDrawer(),
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.red,
         title: Text(_district.districtName),
       ),

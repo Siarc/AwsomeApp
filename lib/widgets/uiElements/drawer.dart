@@ -2,7 +2,7 @@ import 'package:awsome_app/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awsome_app/style/theme.dart' as Theme;
-import 'package:awsome_app/screens/personalGuidesPage/index.dart';
+import 'package:awsome_app/screens/guidesPage/index.dart';
 
 import 'package:awsome_app/models/profile/pModel.dart';
 
@@ -154,7 +154,7 @@ class _SideDrawerState extends State<SideDrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PersonalGuidesPage()),
+                MaterialPageRoute(builder: (context) => GuidesPage()),
               );
             },
           ),

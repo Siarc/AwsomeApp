@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-import 'package:awsome_app/models/profile/pModel.dart';
-
 class AuthService with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final databaseReference = FirebaseDatabase.instance.reference();

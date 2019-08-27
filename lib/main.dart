@@ -10,7 +10,7 @@ import 'package:awsome_app/screens/loginPage/index.dart';
 //import "package:awsome_app/screens/districtPage/index.dart";
 import 'package:awsome_app/screens/splashScreen/index.dart';
 import 'package:awsome_app/screens/divisionPage/index.dart';
-import 'package:awsome_app/screens/personalGuidesPage/index.dart';
+import 'package:awsome_app/screens/guidesPage/index.dart';
 
 void main() => runApp(ChangeNotifierProvider<AuthService>(
       child: MyApp(),
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         '/loginPage': (BuildContext context) => LoginPage(),
         '/divisionPage': (BuildContext context) => DivisionPage(),
         '/splashScreen': (BuildContext context) => SplashScreen(),
-        '/personalGuidesPage': (BuildContext context) => PersonalGuidesPage(),
+        '/personalGuidesPage': (BuildContext context) => GuidesPage(),
       },
 
       onUnknownRoute: (RouteSettings settings) {
