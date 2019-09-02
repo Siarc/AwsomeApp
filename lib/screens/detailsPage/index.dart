@@ -16,7 +16,7 @@ class DetialsPage extends StatefulWidget {
 
 class _DetialsPageState extends State<DetialsPage> {
   District _district;
-  int _current = 0;
+  
 
   _buildBackgroundImage() {
     return DecorationImage(
@@ -39,11 +39,7 @@ class _DetialsPageState extends State<DetialsPage> {
       autoPlayAnimationDuration: Duration(milliseconds: 2000),
       pauseAutoPlayOnTouch: Duration(seconds: 10),
       scrollDirection: Axis.horizontal,
-      onPageChanged: (index) {
-        setState(() {
-          _current = index;
-        });
-      },
+      
       items: _district.image.map((imgUrl) {
         return Builder(
           builder: (BuildContext context) {

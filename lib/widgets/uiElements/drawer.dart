@@ -2,9 +2,6 @@ import 'package:awsome_app/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awsome_app/style/theme.dart' as Theme;
-import 'package:awsome_app/screens/guidesPage/index.dart';
-
-import 'package:awsome_app/models/profile/pModel.dart';
 
 class SideDrawer extends StatefulWidget {
   SideDrawer({Key key}) : super(key: key);
@@ -121,6 +118,10 @@ class _SideDrawerState extends State<SideDrawer> {
             title: Text('Travel Area'),
             onTap: () {
               Navigator.pop(context);
+              Navigator.pushNamed(
+                context,
+                "/divisionPage",
+              );
             },
           ),
           ListTile(
@@ -152,9 +153,10 @@ class _SideDrawerState extends State<SideDrawer> {
           ListTile(
             title: Text('Create Guide'),
             onTap: () {
-              Navigator.push(
+              Navigator.pop(context);
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(builder: (context) => GuidesPage()),
+                "/guidesPage",
               );
             },
           ),

@@ -32,8 +32,11 @@ dev_dependencies:
   flutter_spinkit: "^3.1.0"
   firebase_database: ^3.0.6
   intl: ^0.15.8
+  zefyr: ^0.6.0
   sqflite: ^1.1.5
   rxdart: ^0.22.1+1
+  numberpicker: ^1.1.0
+  uuid: 2.0.1
   flutter_test:
     sdk: flutter
 
@@ -58,6 +61,9 @@ flutter:
   - assets/wlopDrawerHeaderBackground.jpg
   - assets/wlopPlaceHolderImage.jpg
   - assets/wallpaperHD.jpg
+  - assets/wlopNewItem.jpg
+  - assets/breeze.jpg
+  - assets/text.json
   - assets/detailsBackground.jpg
   - assets/divisionMaps/
   - assets/bagerhat/

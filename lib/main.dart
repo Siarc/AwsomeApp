@@ -1,13 +1,9 @@
-import 'dart:io';
-
 import 'package:awsome_app/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:awsome_app/screens/loginPage/index.dart';
-//import 'package:awsome_app/screens/registerPage/index.dart';
-//import "package:awsome_app/screens/districtPage/index.dart";
 import 'package:awsome_app/screens/splashScreen/index.dart';
 import 'package:awsome_app/screens/divisionPage/index.dart';
 import 'package:awsome_app/screens/guidesPage/index.dart';
@@ -57,7 +53,7 @@ class _MyAppState extends State<MyApp> {
         '/loginPage': (BuildContext context) => LoginPage(),
         '/divisionPage': (BuildContext context) => DivisionPage(),
         '/splashScreen': (BuildContext context) => SplashScreen(),
-        '/personalGuidesPage': (BuildContext context) => GuidesPage(),
+        '/guidesPage': (BuildContext context) => GuidesPage(),
       },
 
       onUnknownRoute: (RouteSettings settings) {
